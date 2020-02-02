@@ -1,0 +1,53 @@
+﻿@model IEnumerable<MvcRentC.Models.Cars>
+
+@{
+    ViewBag.Title = "Select Cars";
+}
+
+<h2>Index</h2>
+@using (Html.BeginForm())
+{
+
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Plate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Manufacturer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Model)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PricePerDay)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Plate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Manufacturer)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Model)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PricePerDay)
+                </td>
+                <td>
+                    @Html.ActionLink("Select", "Select", new { id = item.CarID }) |
+                    @Html.ActionLink("Details", "SelectDetails", new {id = item.CarID })
+                </td>
+            </tr>
+        }
+
+    </table>
+}
+

@@ -1,0 +1,47 @@
+﻿@model IEnumerable<MvcRentC.Models.Cars>
+
+@{
+    ViewBag.Title = "LeastCars";
+}
+
+<h2>LeastCars</h2>
+
+<p>
+    @Html.ActionLink("Back To Reports", "Index")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Plate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Manufacturer)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Model)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PricePerDay)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Plate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Manufacturer)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Model)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PricePerDay)
+        </td>
+      
+    </tr>
+}
+
+</table>
