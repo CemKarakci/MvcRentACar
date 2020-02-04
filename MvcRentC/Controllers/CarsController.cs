@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MvcRentC.Models;
+using MvcRentC.Models.ModelsForWebService;
 
 namespace MvcRentC.Controllers
 {
@@ -15,30 +16,43 @@ namespace MvcRentC.Controllers
         {
             private RentCDataBaseEntities db = new RentCDataBaseEntities();
 
-            // GET: Cars
-            public ActionResult SelectCars()
-            {
-                var dates = Session["Dates"] as Dates;
+        // GET: Cars
+        public ActionResult SelectCars()
+        {
+            var dates = Session["Dates"] as Dates;
 
-                var cars = db.Cars.ToList();
-                var reservations = db.Reservations.ToList();
-                var statuses = db.ReservationStatuses.ToList();
-                var canceledReservations = statuses.FindAll(x => x.Name == "CANCELED").ToList();
-                var result = reservations.Where(p => !canceledReservations.Any(x => x.ReservStatsID == p.ReservStatsID)).ToList();
-                var carsRented = from b in result
-                                 where
-                                         ((dates.StartDate >= b.StartDate) && (dates.StartDate <= b.EndDate)) ||
-                                         ((dates.EndDate >= b.StartDate) && (dates.EndDate <= b.EndDate)) ||
-                                         ((dates.StartDate <= b.StartDate) && (dates.EndDate >= b.StartDate) && (dates.EndDate <= b.EndDate)) ||
-                                         ((dates.StartDate >= b.StartDate) && (dates.StartDate <= b.EndDate) && (dates.EndDate >= b.EndDate)) ||
-                                         ((dates.StartDate <= b.StartDate) && (dates.EndDate >= b.EndDate))
-                                 select b;
+            ServiceReference1.Service1Client client = new ServiceReference1.Service1Client();
+            ServiceReference1.Date date = new ServiceReference1.Date();
+            date.StartDate = dates.StartDate;
+            date.EndDate = dates.EndDate;
 
-                var availableCars = cars.Where(r => !carsRented.Any(b => b.CarID == r.CarID)).ToList();
+            var cars = client.ListAvailableCars(date).ToList();
 
-                return View(availableCars);
+            var availableCars = ConvertToCars(cars);
+
+
+            return View(availableCars);
             }
-            [Authorize(Roles="Admin,Manager,Sales")]
+
+        private List<Cars> ConvertToCars(List<ServiceReference1.CarsDTO> cars)
+        {
+            var auto = new List<Cars>();
+            foreach (var car in cars)
+            {
+                var auto1 = new Cars();
+                auto1.CarID = car.CarID;
+                auto1.Manufacturer = car.Manufacturer;
+                auto1.Model = car.Model;
+                auto1.Plate = car.Plate;
+                auto1.PricePerDay = car.PricePerDay;
+
+                auto.Add(auto1);
+            }
+            return auto;
+
+        }
+
+        [Authorize(Roles="Admin,Manager,Sales")]
             public ActionResult Index()
             {
 

@@ -33,7 +33,5 @@ namespace MvcRentC.Models
         public virtual DbSet<ReservationStatuses> ReservationStatuses { get; set; }
         public virtual DbSet<Roles> Roles { get; set; }
         public virtual DbSet<Users> Users { get; set; }
-
-        public System.Data.Entity.DbSet<MvcRentC.Models.UserViewModel> UserViewModels { get; set; }
     }
 }

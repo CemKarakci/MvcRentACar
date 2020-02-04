@@ -11,8 +11,7 @@ namespace MvcRentC.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class Customers
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,10 +21,8 @@ namespace MvcRentC.Models
         }
     
         public int CostumerID { get; set; }
-        [Required]
         public string Name { get; set; }
         public System.DateTime BirthDate { get; set; }
-        [Required]
         public string Location { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

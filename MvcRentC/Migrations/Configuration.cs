@@ -5,14 +5,14 @@ namespace MvcRentC.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<MvcRentC.Models.ApplicationDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<MvcRentC.Models.RentCDataBaseEntities>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(MvcRentC.Models.ApplicationDbContext context)
+        protected override void Seed(MvcRentC.Models.RentCDataBaseEntities context)
         {
             //  This method will be called after migrating to the latest version.
 
